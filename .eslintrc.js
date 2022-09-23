@@ -4,6 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
+    '@antfu', // 脱离prettier
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/typescript/recommended',
@@ -44,10 +45,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["*.html"],
+      files: ['*.html'],
       rules: {
         // https://github.com/vuejs/eslint-plugin-vue/issues/1355
-        "vue/comment-directive": "off",
+        'vue/comment-directive': 'off',
       },
     },
   ],

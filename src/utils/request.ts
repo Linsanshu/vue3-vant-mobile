@@ -1,9 +1,9 @@
-import type { AxiosRequestConfig, AxiosError } from 'axios'
+import type { AxiosError, AxiosRequestConfig } from 'axios'
 import axios, { AxiosResponse } from 'axios'
+import { showNotify } from 'vant'
 import type { ResponseBody } from '@/api/typing'
 import { localStorage } from '@/utils/local-storage'
 import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
-import { showNotify } from 'vant'
 
 // 这里是用于设定请求后端时，所用的 Token KEY
 // 可以根据自己的需要修改，常见的如 Access-Token，Authorization
@@ -19,10 +19,12 @@ const request = axios.create({
 })
 
 export type RequestError = AxiosError<{
-  message?: string,
-  result?: any,
+  message?: string
+  result?: any
   errorMessage?: string
-}>
+}
+
+>
 
 // 异常拦截处理器
 const errorHandler = (error: RequestError): Promise<any> => {
@@ -32,14 +34,14 @@ const errorHandler = (error: RequestError): Promise<any> => {
     if (status === 403) {
       showNotify({
         type: 'danger',
-        message: (data && data.message) || statusText
+        message: (data && data.message) || statusText,
       })
     }
     // 401 未登录/未授权
     if (status === 401 && data.result && data.result.isLogin) {
       showNotify({
         type: 'danger',
-        message: 'Authorization verification failed'
+        message: 'Authorization verification failed',
       })
       // 如果你需要直接跳转登录页面
       // location.replace(loginRoutePath)
@@ -55,9 +57,9 @@ const requestHandler = (
   const savedToken = localStorage.get(STORAGE_TOKEN_KEY)
   // 如果 token 存在
   // 让每个请求携带自定义 token, 请根据实际情况修改
-  if (savedToken) {
+  if (savedToken)
     config.headers[REQUEST_TOKEN_KEY] = savedToken
-  }
+
   return config
 }
 

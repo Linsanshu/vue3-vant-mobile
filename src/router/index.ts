@@ -2,23 +2,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-NProgress.configure({ showSpinner: true })
 
 // 导入路由组件
 import mian from '@/views/index.vue'
 import mock from '@/views/mock/index.vue'
+NProgress.configure({ showSpinner: true })
 
 // 定义路由，每个路由都需要映射到一个组件
 const routes = [
   {
     path: '/',
     name: 'main',
-    component: mian
+    component: mian,
   }, {
     path: '/mock',
     name: 'mock',
-    component: mock
-  }
+    component: mock,
+  },
 ]
 
 // 创建路由实例并传递 `routes` 配置
@@ -32,7 +32,7 @@ const router = createRouter({
 })
 
 router.beforeEach((_to, _from, next) => {
-  NProgress.start(); // start progress bar
+  NProgress.start() // start progress bar
   next()
 })
 

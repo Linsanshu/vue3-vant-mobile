@@ -23,7 +23,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
     define: {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
-      'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH)
+      'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
 
     plugins: [
@@ -32,13 +32,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       visualizer(),
 
       legacy({
-        targets: ['defaults', 'not IE 11']
+        targets: ['defaults', 'not IE 11'],
       }),
 
       Components({
         dts: true,
         resolvers: [VantResolver()],
-        types: []
+        types: [],
       }),
 
       AutoImport({
@@ -50,12 +50,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         imports: [
           'vue',
           'vue-router',
-          'vitest'
+          'vitest',
         ],
         dts: true,
         eslintrc: {
-          enabled: true
-        }
+          enabled: true,
+        },
       }),
 
       viteVConsole({
@@ -64,22 +64,22 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         enabled: false,
         config: {
           maxLogNumber: 1000,
-          theme: 'light'
-        }
-      })
+          theme: 'light',
+        },
+      }),
     ],
 
     build: {
       cssCodeSplit: false,
-      chunkSizeWarningLimit: 2048
+      chunkSizeWarningLimit: 2048,
     },
-    
+
     resolve: {
       alias: {
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
-        '~': path.join(__dirname, './src/assets')
-      }
+        '~': path.join(__dirname, './src/assets'),
+      },
     },
 
     server: {
@@ -90,9 +90,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           // backend url
           target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : '',
           ws: false,
-          changeOrigin: true
-        }
-      }
-    }
+          changeOrigin: true,
+        },
+      },
+    },
   }
 }

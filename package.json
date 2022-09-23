@@ -6,7 +6,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "build:dev": "vue-tsc --noEmit && vite build --mode=development",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "lint": "eslint --fix --ext .js,vue src/",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "test": "vitest",
     "plop": "plop"
@@ -21,6 +22,7 @@
     "vant": "4.0.0-beta.0",
     "vconsole": "^3.14.6",
     "vue": "^3.2.25",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "eslint": "^8.17.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-vue": "^9.1.0",
+    "@antfu/eslint-config": "^0.25.2",
     "express": "4.17.3",
     "husky": "^8.0.1",
     "less": "^4.1.2",

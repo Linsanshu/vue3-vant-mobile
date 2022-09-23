@@ -1,25 +1,10 @@
-<template>
-  <van-nav-bar title="💿 mock 指南" left-arrow @click-left="onClickLeft"/>
-
-  <div class="container">
-    <div class="data-label"> 来自异步请求的数据 </div>
-    <div class="data-content">
-      <div v-if="messages">{{ messages }}</div>
-      <van-empty v-else description="暂无数据" />
-    </div>
-
-    <van-button round block type="primary" @click="pull">请求</van-button>
-    <van-button round block type="default" @click="reset">清空</van-button>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { queryProse } from '@/api'
 
 const messages = ref<string>('')
 
 const pull = () => {
-  queryProse().then(res => {
+  queryProse().then((res) => {
     messages.value = res.prose
   })
 }
@@ -29,8 +14,30 @@ const reset = () => messages.value = ''
 
 // back
 const onClickLeft = () => history.back()
-
 </script>
+
+<template>
+  <van-nav-bar title="💿 mock 指南" left-arrow @click-left="onClickLeft" />
+
+  <div class="container">
+    <div class="data-label">
+      来自异步请求的数据
+    </div>
+    <div class="data-content">
+      <div v-if="messages">
+        {{ messages }}
+      </div>
+      <van-empty v-else description="暂无数据" />
+    </div>
+
+    <van-button round block type="primary" @click="pull">
+      请求
+    </van-button>
+    <van-button round block type="default" @click="reset">
+      清空
+    </van-button>
+  </div>
+</template>
 
 <style lang="less" scoped>
 .container {
