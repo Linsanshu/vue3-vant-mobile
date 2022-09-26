@@ -42,10 +42,14 @@ watch(checked, (val) => {
   }
 })
 watch(lanChange, (val) => {
-  if (val)
+  if (val) {
     setLang('en-us')
-  else
+    localStorage.set('language', 'en')
+  }
+  else {
     setLang('zh-cn')
+    localStorage.set('language', 'zh')
+  }
 })
 </script>
 

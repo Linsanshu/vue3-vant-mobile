@@ -59,6 +59,7 @@ const requestHandler = (
     config.headers[REQUEST_TOKEN_KEY] = savedToken
   // 先写死渠道
   config.headers['X-CHANNEL-KEY'] = 'gcclaJGk7c18myivtm5cT6CGv6apEmn5'
+  config.headers.LOCALE = localStorage.get('language')
 
   return config
 }

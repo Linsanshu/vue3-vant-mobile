@@ -12,9 +12,10 @@ export async function getLogin(data): Promise<any> {
   })
 }
 
-export async function getSellables(): Promise<any> {
+export async function getSellables(params): Promise<any> {
   return request({
     method: 'GET',
     url: 'v1/sellables',
+    params,
   })
 }
