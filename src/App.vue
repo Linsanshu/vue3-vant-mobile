@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ConfigProviderTheme } from 'vant'
 import { localStorage } from '@/utils/local-storage'
+import TabBar from '@/components/tab-bar/tab-bar.vue'
 
 import { useStore } from '@/stores'
 
@@ -25,5 +26,6 @@ watch(mode, (val) => {
 <template>
   <van-config-provider :theme="theme">
     <router-view />
+    <TabBar />
   </van-config-provider>
 </template>

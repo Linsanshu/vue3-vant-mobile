@@ -1,6 +1,7 @@
 export const lang = {
-  'home-title': 'home',
-  'my-title': 'my',
-  'test-title': 'test',
-  'detail-title': 'detail',
+  'home-title': '首页',
+  'my-title': '我的',
+  'test-title': '测试页',
+  'detail-title': '列表详情',
+  'lan-change': '中英文切换',
 }

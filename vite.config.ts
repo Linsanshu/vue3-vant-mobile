@@ -27,7 +27,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     },
 
     plugins: [
-      vue(),
+      vue({
+        reactivityTransform: true,
+      }),
       vueJsx(),
       visualizer(),
 
