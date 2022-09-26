@@ -2,7 +2,30 @@
 import { useStore } from '@/stores'
 import { localStorage } from '@/utils/local-storage'
 import { setLang } from '@/i18n'
+import { getLogin, getSellables } from '@/api'
+import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
 
+const pull = (target) => {
+  switch (target) {
+    case 'getSellables':
+      getSellables().then(res => console.log(res))
+      break
+    default:
+      getLogin({
+        'user': {
+          'sign_in_type': 'user',
+          'email': 'linchuan@fooyo.cg',
+          'phone_number': '18583358635',
+          'password': '11111111',
+          'token_provider': 'ciam',
+          'token': 'string',
+          'device_key': 'string',
+        },
+      }).then((res) => {
+        localStorage.set(STORAGE_TOKEN_KEY, `Bearer ${res.authorization && res.authorization.access_token}`)
+      })
+  }
+}
 const store = useStore()
 const themeStore = localStorage.get('theme')
 const checked = ref < boolean > (themeStore === 'dark')
@@ -40,6 +63,16 @@ watch(lanChange, (val) => {
         </template>
       </van-cell>
       <van-cell title="mock" to="mock" is-link />
+      <van-cell title="登陆">
+        <van-button round block type="primary" size="mini" @click="pull">
+          请求
+        </van-button>
+      </van-cell>
+      <van-cell title="getSellables">
+        <van-button round block type="primary" size="mini" @click="pull('getSellables')">
+          请求
+        </van-button>
+      </van-cell>
     </van-cell-group>
   </div>
 </template>

@@ -3,7 +3,7 @@ const tabbarData = [
     text: '列表',
     image: 'tabbar/tab_list.png',
     imageActive: 'tabbar/tab_list_active.png',
-    path: '/home',
+    path: '/list',
   },
   {
     text: '订单',

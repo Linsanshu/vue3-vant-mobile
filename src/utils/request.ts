@@ -9,7 +9,7 @@ import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
 // 可以根据自己的需要修改，常见的如 Access-Token，Authorization
 // 需要注意的是，请尽量保证使用中横线`-` 来作为分隔符，
 // 避免被 nginx 等负载均衡器丢弃了自定义的请求头
-export const REQUEST_TOKEN_KEY = 'Access-Token'
+export const REQUEST_TOKEN_KEY = 'Authorization'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -22,9 +22,7 @@ export type RequestError = AxiosError<{
   message?: string
   result?: any
   errorMessage?: string
-}
-
->
+}>
 
 // 异常拦截处理器
 const errorHandler = (error: RequestError): Promise<any> => {
@@ -59,6 +57,8 @@ const requestHandler = (
   // 让每个请求携带自定义 token, 请根据实际情况修改
   if (savedToken)
     config.headers[REQUEST_TOKEN_KEY] = savedToken
+  // 先写死渠道
+  config.headers['X-CHANNEL-KEY'] = 'gcclaJGk7c18myivtm5cT6CGv6apEmn5'
 
   return config
 }
