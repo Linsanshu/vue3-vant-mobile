@@ -1,9 +1,9 @@
 const tabbarData = [
   {
-    text: '列表',
+    text: 'menu',
     image: 'tabbar/tab_list.png',
     imageActive: 'tabbar/tab_list_active.png',
-    path: '/list',
+    path: '/menu',
   },
   {
     text: '订单',

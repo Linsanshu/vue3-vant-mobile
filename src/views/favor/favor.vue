@@ -8,7 +8,7 @@ import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
 const pull = (target) => {
   switch (target) {
     case 'getSellables':
-      getSellables().then(res => console.log(res))
+      getSellables({}).then(res => console.log(res))
       break
     default:
       getLogin({

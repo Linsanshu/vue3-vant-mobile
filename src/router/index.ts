@@ -5,7 +5,9 @@ import 'nprogress/nprogress.css'
 
 // 导入路由组件
 import mock from '@/views/mock/index.vue'
-const list = () => import('@/views/list/list.vue')
+const menu = () => import('@/views/menu/index.vue')
+const list = () => import('@/views/menu/list/index.vue')
+const productDetail = () => import('@/views/menu/detail/index.vue')
 const order = () => import('@/views/order/order.vue')
 const favor = () => import('@/views/favor/favor.vue')
 NProgress.configure({ showSpinner: true })
@@ -14,7 +16,7 @@ NProgress.configure({ showSpinner: true })
 const routes = [
   {
     path: '/',
-    redirect: '/list',
+    redirect: '/menu',
   },
   {
     path: '/mock',
@@ -22,8 +24,19 @@ const routes = [
     component: mock,
   },
   {
-    path: '/list',
-    component: list,
+    path: '/menu',
+    component: menu,
+    children: [
+      {
+        path: '',
+        component: list,
+      },
+      {
+        path: 'detail/:id',
+        name: 'productDetail',
+        component: productDetail,
+      },
+    ],
   },
   {
     path: '/order',

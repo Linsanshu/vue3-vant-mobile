@@ -19,3 +19,10 @@ export async function getSellables(params): Promise<any> {
     params,
   })
 }
+
+export async function getProducts(id): Promise<any> {
+  return request({
+    method: 'GET',
+    url: `v1/products/${id}`,
+  })
+}

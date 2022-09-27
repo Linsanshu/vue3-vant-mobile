@@ -1,10 +1,23 @@
 :root {
   --primary-color: #ff9854;
+  /*小破岛颜色*/
+  --mainColor: #f8a909;
+  /*使用透明度时使用*/
+  --mainColorRgb: 252, 210, 51;
+  --mainSecondColorRgb: 248, 169, 9;
 
-  /* 全局修改: 任何地方只要用到-van-tabbar-item-icon-size都会被修改掉 */
-  /* --van-tabbar-item-icon-size: 30px !important; */
+  /*渐变浅色的颜色，无需渐变设置和主色一样*/
+  --lightMainColor: #fdd754;
+  --secondaryColor: #df5944;
+  
+  --maxScreenWidth: 750rpx;
 }
-
+@media (min-width: 640px) {
+  :root {
+    --maxScreenWidth: 375px;
+  }
+}
 body {
   font-size: 14px;
+  font-family: PingFang SC,Tahoma,Microsoft Yahei,Helvetica,Arial,宋体,sans-serif;
 }
