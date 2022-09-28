@@ -1,9 +1,5 @@
-import { defineStore } from 'pinia'
+import { createPinia } from 'pinia'
 
-export const useStore = defineStore({
-  id: 'index',
-  state: () => ({
-    // light || dark
-    mode: '',
-  }),
-})
+const pinia = createPinia()
+
+export default pinia

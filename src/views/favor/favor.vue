@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStore } from '@/stores'
+import { useStore } from '@/stores/modules/theme'
 import { localStorage } from '@/utils/local-storage'
 import { setLang } from '@/i18n'
 import { getLogin, getSellables } from '@/api'

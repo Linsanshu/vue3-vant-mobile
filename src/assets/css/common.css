@@ -11,6 +11,9 @@
   --secondaryColor: #df5944;
   
   --maxScreenWidth: 750rpx;
+
+  /* 目前不生效 todo */
+  --van-primary-color: var(--primary-color);
 }
 @media (min-width: 640px) {
   :root {

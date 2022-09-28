@@ -4,6 +4,7 @@ import { showNotify } from 'vant'
 import type { ResponseBody } from '@/api/typing'
 import { localStorage } from '@/utils/local-storage'
 import { STORAGE_TOKEN_KEY } from '@/stores/mutation-type'
+import useMainStore from '@/stores/modules/main'
 
 // 这里是用于设定请求后端时，所用的 Token KEY
 // 可以根据自己的需要修改，常见的如 Access-Token，Authorization
@@ -52,13 +53,15 @@ const errorHandler = (error: RequestError): Promise<any> => {
 const requestHandler = (
   config: AxiosRequestConfig,
 ): AxiosRequestConfig | Promise<AxiosRequestConfig> => {
+  const mainStore = useMainStore()
+  mainStore.isLoading = true
   const savedToken = localStorage.get(STORAGE_TOKEN_KEY)
   // 如果 token 存在
   // 让每个请求携带自定义 token, 请根据实际情况修改
   if (savedToken)
     config.headers[REQUEST_TOKEN_KEY] = savedToken
   // 先写死渠道
-  config.headers['X-CHANNEL-KEY'] = 'gcclaJGk7c18myivtm5cT6CGv6apEmn5'
+  config.headers['X-CHANNEL-KEY'] = 'pHyrOyCdviMHrSrjn70BCQrIYJWQO9Hf'
   config.headers.LOCALE = localStorage.get('language')
 
   return config
@@ -71,6 +74,8 @@ request.interceptors.request.use(requestHandler, errorHandler)
 const responseHandler = (
   response: AxiosResponse,
 ): ResponseBody<any> | AxiosResponse<any> | Promise<any> | any => {
+  const mainStore = useMainStore()
+  mainStore.isLoading = false
   return response.data
 }
 

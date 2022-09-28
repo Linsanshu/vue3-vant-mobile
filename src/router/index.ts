@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 
 // 导入路由组件
 import mock from '@/views/mock/index.vue'
-const menu = () => import('@/views/menu/index.vue')
+// const menu = () => import('@/views/menu/index.vue')
 const list = () => import('@/views/menu/list/index.vue')
 const productDetail = () => import('@/views/menu/detail/index.vue')
 const order = () => import('@/views/order/order.vue')
@@ -25,18 +25,16 @@ const routes = [
   },
   {
     path: '/menu',
-    component: menu,
-    children: [
-      {
-        path: '',
-        component: list,
-      },
-      {
-        path: 'detail/:id',
-        name: 'productDetail',
-        component: productDetail,
-      },
-    ],
+    name: 'menu',
+    component: list,
+  },
+  {
+    path: '/menu/detail/:id',
+    name: 'productDetail',
+    component: productDetail,
+    meta: {
+      hideTabBar: true,
+    },
   },
   {
     path: '/order',

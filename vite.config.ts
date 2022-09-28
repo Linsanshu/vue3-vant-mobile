@@ -81,6 +81,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
         '~': path.join(__dirname, './src/assets'),
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
       },
     },
 
@@ -91,7 +92,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         '/api': {
           // backend url mock
           // target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : '',
-          target: 'https://msi-c2-api.fooyo.shop/services/core/',
+          target: 'https://msi-c2qa-api.fooyo.shop/services/core/',
           ws: false,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),

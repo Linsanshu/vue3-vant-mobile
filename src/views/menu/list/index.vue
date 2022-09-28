@@ -75,7 +75,6 @@ getListData()
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <!-- <van-cell v-for="item in itemList" :key="item.id" :title="item.name" /> -->
         <div v-for="item in itemList" :key="item.id" class="shop-item-row-card-container" @click="goDetail(item)">
           <div class="shop-item">
             <div class="image">
@@ -85,7 +84,7 @@ getListData()
                   height="96"
                   radius="8"
                   fit="cover"
-                  src="https://sgshop-assets.fooyotravel.com/uploads/images/image/91983/medium_ae1f20570d.jpeg"
+                  :src="item.image_url"
                 />
               </div>
             </div>
@@ -98,7 +97,7 @@ getListData()
               <div class="bottom-info">
                 <div class="bottom-left">
                   <div class="bottom-info-price">
-                    <span>S$9.9</span>
+                    <span>S${{ item.price_high }}</span>
                   </div>
                   <div class="bottom-info-sold-count">
                     <span>59 Sold</span>
@@ -107,11 +106,11 @@ getListData()
                 <div class="bottom-right">
                   <div class="has-authorized">
                     <div class="add-cart">
-                      <van-image
+                      <!-- <van-image
                         width="24"
                         height="24"
                         src="https://restaurant.fooyo.shop/static/themeone/add-cart.svg"
-                      />
+                      /> -->
                     </div>
                   </div>
                 </div>
