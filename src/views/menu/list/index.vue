@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getSellables } from '@/api'
-const itemList = ref < Array<sellablesItem> > ([])
 interface pageType {
   page: number
   per_page: number
@@ -14,6 +13,8 @@ interface sellablesItem {
   sellable_type: string
   short_desc: string
 }
+const value = ref('')
+const itemList = ref < Array<sellablesItem> > ([])
 const pageData = ref <pageType> ({
   page: 1,
   per_page: 50,
@@ -66,6 +67,7 @@ getListData()
 </script>
 
 <template>
+  <van-search v-model="value" shape="round" placeholder="请输入搜索关键词" />
   <div class="item-list">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list

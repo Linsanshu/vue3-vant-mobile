@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getProducts } from '@/api'
+import { connectArrText } from '@/utils/utils'
 // interface productDetailType {
 //   custom_attributes: Array
 //   desc: string
@@ -34,9 +35,40 @@ const onClickAdd = () => {
 const onClickCheck = () => {
   show.value = true
 }
-
+const priceRange = computed(() => {
+  if (product.value.price_low === product.value.price_high)
+    return product.value.price_low
+  else
+    return `${product.value.price_low}~${product.value.price_high}`
+})
 const topImg = computed(() => product.value.images && product.value.images[0])
-const slectedInfo = computed(() => `已选择${product.value.name}`)
+const slectedInfo = computed(() => connectArrText(product.value.variations.map(item => item.selected), ','))
+
+let curVariationIndex = 0
+const showPicker = ref(false)
+const isReadonly = ref(true)
+const columnsVariation = ref([])
+const customFieldName = {
+  text: 'name',
+  value: 'id',
+}
+const showVariationPicker = (index) => {
+  curVariationIndex = index
+  columnsVariation.value = product.value.variations[index] && product.value.variations[index].variants
+  isReadonly.value = true
+  showPicker.value = true
+}
+
+const onConfirm = ({ selectedOptions }) => {
+  product.value.variations[curVariationIndex].selected = selectedOptions[0]?.name
+  product.value.variations[curVariationIndex].selectedID = selectedOptions[0]?.id
+  isReadonly.value = false
+  showPicker.value = false
+}
+const onCancel = () => {
+  isReadonly.value = false
+  showPicker.value = false
+}
 </script>
 
 <template>
@@ -68,7 +100,7 @@ const slectedInfo = computed(() => `已选择${product.value.name}`)
           {{ product.name }}
         </div>
         <div class="price">
-          S${{ product.price_high }}
+          S${{ priceRange }}
         </div>
       </div>
     </div>
@@ -94,7 +126,7 @@ const slectedInfo = computed(() => `已选择${product.value.name}`)
     :loading="false"
     currency="S$"
     label="Total:"
-    :price="3050"
+    :price="3055"
     button-text="提交订单"
   >
     <van-badge :content="5">
@@ -122,12 +154,56 @@ const slectedInfo = computed(() => `已选择${product.value.name}`)
     position="bottom"
     :style="{ height: '75%' }"
   >
-    <van-card
-      num="2"
-      price="2.00"
-      :desc="slectedInfo"
-      :title="product.name"
-      :thumb="topImg.image_url"
+    <div class="add-conten">
+      <div class="add-header">
+        <div class="add-card">
+          <van-card
+            currency="S$"
+            :desc="product.short_desc"
+            :title="product.name"
+            :thumb="topImg.image_url"
+          >
+            <template #price>
+              <div>S${{ priceRange }}</div>
+            </template>
+            <template #bottom>
+              <div>{{ slectedInfo ? `已选择${slectedInfo}` : '' }}</div>
+            </template>
+          </van-card>
+        </div>
+        <div class="add-main">
+          <van-form>
+            <van-cell-group inset title="Product Variations">
+              <div v-for="(varItem, index) in product.variations" :key="varItem.id">
+                <van-field
+                  v-model="varItem.selected"
+                  :readonly="isReadonly"
+                  clearable
+                  clear-trigger="always"
+                  name="Variations"
+                  :label="varItem.name"
+                  :placeholder="`点击选择${varItem.name}`"
+                  :rules="[{ required: true, message: `请选择${varItem.name}` }]"
+                  @click="showVariationPicker(index)"
+                />
+              </div>
+            </van-cell-group>
+          </van-form>
+        </div>
+      </div>
+      <div class="add-submit">
+        <van-button round block type="primary" native-type="submit">
+          提交
+        </van-button>
+      </div>
+    </div>
+  </van-popup>
+  <van-popup v-model:show="showPicker" position="bottom">
+    <van-picker
+      :columns-field-names="customFieldName"
+      :columns="columnsVariation"
+      @confirm="onConfirm"
+      @cancel="onCancel"
     />
   </van-popup>
 </template>
@@ -196,5 +272,14 @@ const slectedInfo = computed(() => `已选择${product.value.name}`)
 .checkout-button{
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+}
+.add-conten{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .add-card{
+
+  }
 }
 </style>
