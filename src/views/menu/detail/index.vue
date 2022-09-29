@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { getProducts } from '@/api'
 import { connectArrText } from '@/utils/utils'
+import { useCartInfoStore } from '@/stores/modules/cartInfo'
+const cartInfoStore = useCartInfoStore()
 // interface productDetailType {
 //   custom_attributes: Array
 //   desc: string
@@ -33,7 +35,9 @@ const onClickAdd = () => {
   show.value = true
 }
 const onClickCheck = () => {
-  show.value = true
+  router.push({
+    name: 'orderCheck',
+  })
 }
 const priceRange = computed(() => {
   if (product.value.price_low === product.value.price_high)
@@ -42,7 +46,16 @@ const priceRange = computed(() => {
     return `${product.value.price_low}~${product.value.price_high}`
 })
 const topImg = computed(() => product.value.images && product.value.images[0])
-const slectedInfo = computed(() => connectArrText(product.value.variations.map(item => item.selected), ','))
+const slectedInfo = computed(() => connectArrText(product.value.variations.map(item => item.selected || '')))
+
+const confirmPrice = ref('')
+watch(
+  () => connectArrText(product.value.variations?.map(item => item.selectedID || '')),
+  (slectedIDInfo) => {
+    const curSku = product.value.product_skus.find(item => connectArrText(item.variant_ids) === slectedIDInfo)
+    confirmPrice.value = curSku ? curSku.price : ''
+  },
+)
 
 let curVariationIndex = 0
 const showPicker = ref(false)
@@ -69,6 +82,12 @@ const onCancel = () => {
   isReadonly.value = false
   showPicker.value = false
 }
+
+const onSubmit = (value) => {
+  console.log('first', value)
+}
+
+const quantity = ref(0)
 </script>
 
 <template>
@@ -155,32 +174,33 @@ const onCancel = () => {
     :style="{ height: '75%' }"
   >
     <div class="add-conten">
-      <div class="add-header">
-        <div class="add-card">
-          <van-card
-            currency="S$"
-            :desc="product.short_desc"
-            :title="product.name"
-            :thumb="topImg.image_url"
-          >
-            <template #price>
-              <div>S${{ priceRange }}</div>
-            </template>
-            <template #bottom>
-              <div>{{ slectedInfo ? `已选择${slectedInfo}` : '' }}</div>
-            </template>
-          </van-card>
-        </div>
-        <div class="add-main">
-          <van-form>
+      <div class="add-card">
+        <van-card
+          currency="S$"
+          :desc="product.short_desc"
+          :title="product.name"
+          :thumb="topImg.image_url"
+        >
+          <template #price>
+            <div>S${{ confirmPrice ? confirmPrice : priceRange }}</div>
+          </template>
+          <template #bottom>
+            <div class="van-ellipsis">
+              {{ slectedInfo ? `已选择${slectedInfo}` : '' }}
+            </div>
+          </template>
+        </van-card>
+      </div>
+      <van-form class="add-form" @submit="onSubmit">
+        <div class="add-form-wrap">
+          <div class="add-form-item">
             <van-cell-group inset title="Product Variations">
               <div v-for="(varItem, index) in product.variations" :key="varItem.id">
                 <van-field
                   v-model="varItem.selected"
                   :readonly="isReadonly"
-                  clearable
                   clear-trigger="always"
-                  name="Variations"
+                  :name="varItem.name"
                   :label="varItem.name"
                   :placeholder="`点击选择${varItem.name}`"
                   :rules="[{ required: true, message: `请选择${varItem.name}` }]"
@@ -188,14 +208,21 @@ const onCancel = () => {
                 />
               </div>
             </van-cell-group>
-          </van-form>
+          </div>
+          <div class="add-submit">
+            <van-field class="add-field-quantity" name="quantity" label="Quantity">
+              <template #input>
+                <van-stepper v-model="quantity" class="add-quantity" />
+              </template>
+            </van-field>
+            <div class="confirm-btn">
+              <van-button round size="normal" block type="primary" native-type="submit">
+                Confirm
+              </van-button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="add-submit">
-        <van-button round block type="primary" native-type="submit">
-          提交
-        </van-button>
-      </div>
+      </van-form>
     </div>
   </van-popup>
   <van-popup v-model:show="showPicker" position="bottom">
@@ -277,9 +304,33 @@ const onCancel = () => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   .add-card{
 
+  }
+  .add-form{
+    flex: 1 0 auto;
+  }
+  .add-form-wrap{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .add-form-item{
+    overflow: auto;
+    padding: 0 12px;
+    min-height: 208px;
+    max-height: calc(75vh - 219px - env(safe-area-inset-bottom));
+  }
+  .add-field-quantity{
+    justify-content: space-between;
+    :deep(.van-cell__value){
+      flex: none;
+    }
+  }
+  .confirm-btn{
+    padding: 5px 20px;
   }
 }
 </style>

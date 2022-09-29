@@ -1,10 +1,10 @@
-export const connectArrText = (arr, splitStr) => {
+export const connectArrText = (arr, splitStr = ',') => {
   if (Array.isArray(arr) && arr.length) {
     const newArr = arr.filter(Boolean)
     if (newArr.length > 1)
-      return arr.join(splitStr)
+      return newArr.join(splitStr)
     else if (newArr.length === 1)
-      return arr[0]
+      return newArr[0]
     else
       return ''
   }

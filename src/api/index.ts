@@ -26,3 +26,11 @@ export async function getProducts(id): Promise<any> {
     url: `v1/products/${id}`,
   })
 }
+
+export async function getQuotation(data): Promise<any> {
+  return request({
+    method: 'POST',
+    url: 'v1/orders/request_quotation',
+    data,
+  })
+}
