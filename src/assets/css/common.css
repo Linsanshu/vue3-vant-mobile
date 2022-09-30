@@ -20,7 +20,17 @@
     --maxScreenWidth: 375px;
   }
 }
-body {
+html, body {
+  width: 100%;
+  heigit: 100%;
   font-size: 14px;
   font-family: PingFang SC,Tahoma,Microsoft Yahei,Helvetica,Arial,宋体,sans-serif;
+}
+div{
+  box-sizing: border-box;
+  word-break: break-word;
+}
+/* 下拉刷新组件可能遮挡tab */
+.van-pull-refresh__head{
+  z-index: -1;
 }

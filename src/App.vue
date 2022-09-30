@@ -16,6 +16,8 @@ const themeVars: ConfigProviderThemeVars = {
   buttonPrimaryBorderColor: 'var(--mainColor)',
   buttonSmallPadding: '0 15px',
   cardPriceColor: 'var(--secondaryColor)',
+  tabActiveTextColor: 'var(--mainColor)',
+  tabsBottomBarColor: 'var(--mainColor)',
 }
 
 watch(mode, (val) => {

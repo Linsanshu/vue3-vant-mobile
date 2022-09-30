@@ -9,10 +9,11 @@ const checked = ref('Dine in')
 const contactNumber = ref<number>()
 const contactEmail = ref('')
 const optional = ref('')
+const onClickCheck = () => {}
 </script>
 
 <template>
-  <van-nav-bar class="checkout-nav-bar" title="Order Confirmation">
+  <van-nav-bar class="primary-nav-bar" title="Order Confirmation">
     <template #left>
       <van-icon name="https://restaurant.fooyo.shop/static/back-l.svg" size="19" @click="onClickLeft" />
     </template>
@@ -126,7 +127,7 @@ const optional = ref('')
 </template>
 
 <style lang="scss" scoped>
-.checkout-nav-bar {
+.primary-nav-bar {
   background: rgb(253, 215, 84);
   &::after{
     content: none;

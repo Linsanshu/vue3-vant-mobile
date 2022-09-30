@@ -134,7 +134,6 @@ getListData()
   padding: 0 12px 0 10px;
   .shop-item-row-card-container {
     box-sizing: border-box;
-    font-family: PingFang SC,Tahoma,Microsoft Yahei,Helvetica,Arial,宋体,sans-serif;
     word-break: break-word;
     .shop-item {
       display: flex;

@@ -8,7 +8,8 @@ import mock from '@/views/mock/index.vue'
 // const menu = () => import('@/views/menu/index.vue')
 const list = () => import('@/views/menu/list/index.vue')
 const productDetail = () => import('@/views/menu/detail/index.vue')
-const order = () => import('@/views/order/order.vue')
+const orderDetail = () => import('@/views/order/detail/index.vue')
+const orderList = () => import('@/views/order/list/index.vue')
 const checkout = () => import('@/views/order/checkout/index.vue')
 const favor = () => import('@/views/favor/favor.vue')
 NProgress.configure({ showSpinner: true })
@@ -47,7 +48,16 @@ const routes = [
   },
   {
     path: '/order',
-    component: order,
+    name: 'order',
+    component: orderList,
+  },
+  {
+    path: '/order/detail/:id',
+    name: 'orderDetail',
+    component: orderDetail,
+    meta: {
+      hideTabBar: true,
+    },
   },
   {
     path: '/favor',
